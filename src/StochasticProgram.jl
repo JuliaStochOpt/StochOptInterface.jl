@@ -1,4 +1,7 @@
-
+################################################################################
+# StochasticProgram
+# An interface for Stochastic Optimization in Julia
+################################################################################
 
 module StochasticProgram
 
