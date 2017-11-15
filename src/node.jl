@@ -37,9 +37,32 @@ function statedim end
 
 
 """
+    set(node::AbstractNode, state::AbstractState)
+
+Set state inside `node`.
+"""
+function set end
+
+
+"""
     numberofpaths(sp::AbstractStochasticProgram, node, len::Integer)
 
 Returns number of paths of length `len` starting at node `node` in `sp`. It should return 1 of `len` is zero.
 """
 numberofpaths(sp::AbstractStochasticProgram, len) = numberofpaths(sp, getmaster(sp), len)
 
+
+"""
+    sample(node::AbstractNode, npaths)
+
+Sample `npaths` path starting from `node`.
+"""
+function sample end
+
+
+"""
+    isleaf(sp::AbstractStochasticProgram, node)
+
+Returns whether `node` has no outgoing edge in `sp`.
+"""
+isleaf(sp::AbstractStochasticProgram, node) = iszero(outdegree(sp, node))

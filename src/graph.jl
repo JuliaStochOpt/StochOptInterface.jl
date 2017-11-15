@@ -25,14 +25,6 @@ function setchildx! end
 
 
 """
-    isleaf(sp::AbstractStochasticProgram, node)
-
-Returns whether `node` has no outgoing edge in `sp`.
-"""
-isleaf(sp::AbstractStochasticProgram, node) = iszero(outdegree(sp, node))
-
-
-"""
     setprobability!(sp::AbstractStochasticProgram, edge, probability)
 
 Sets the probability to take the edge `edge` in the stochastic problem `sp` to `probability`.

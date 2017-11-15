@@ -13,7 +13,7 @@ export AbstractStochasticProgram, stochasticprogram
 
 Stochastic program instance
 """
-abstract type AbstractStochasticProgram <: AbstractGraph{Int} end
+abstract type AbstractStochasticProgram <: AbstractGraph end
 
 
 """
@@ -21,10 +21,19 @@ abstract type AbstractStochasticProgram <: AbstractGraph{Int} end
 
 Creates a stochastic program from the arguments
 """
-function StochasticProgram end
+function stochasticprogram end
 
 
-include("src/graph.jl")
-include("src/node.jl")
+"""
+    write(sp::AbstractStochasticProgram, filename::String)
+
+Write the StochasticProgram `sp` inside `filename`.
+"""
+function write end
+
+
+include("graph.jl")
+include("node.jl")
+include("solvers.jl")
 
 end
