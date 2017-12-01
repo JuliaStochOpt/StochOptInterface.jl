@@ -3,7 +3,7 @@
 # An interface for Stochastic Optimization in Julia
 ################################################################################
 
-module StochasticProgram
+module StochOptInterface
 
 using LightGraphs
 
