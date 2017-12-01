@@ -1,3 +1,3 @@
 # Solver utilities
 
-abstract type AbstractStochasticProgrammingSolver end
+abstract type AbstractStochasticProgramSolver end

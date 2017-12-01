@@ -3,12 +3,12 @@
 # An interface for Stochastic Optimization in Julia
 ################################################################################
 
-module StochasticProgram
+module StochOptInterface
 
 using LightGraphs
 
 
-export AbstractStochasticProgram, stochasticprogram
+export AbstractStochasticProgram, stochasticprogram, AbstractStochasticProgramSolver
 
 
 """
@@ -35,8 +35,10 @@ Write the StochasticProgram `sp` inside `filename`.
 function write end
 
 
-include("graph.jl")
 include("node.jl")
+include("edges.jl")
+include("graph.jl")
+include("valuefunction.jl")
 include("solvers.jl")
 
 end

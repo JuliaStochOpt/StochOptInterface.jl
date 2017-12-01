@@ -1,4 +1,4 @@
-# Graph utilities
+# Graph and edges utilities
 
 """
     getmaster(sp::AbstractStochasticProgram)
@@ -17,11 +17,11 @@ function probability end
 
 
 """
-    setchildx!(sp::AbstractStochasticProgram, node, child, sol)
+    setchildstate!(sp::AbstractStochasticProgram, node::AbstractNode, child::AbstractNode, sol::AbstractSolution)
 
 Sets the parent solution of `child` as `sol`, the solution obtained at `node`.
 """
-function setchildx! end
+function setchildstate! end
 
 
 """
@@ -30,3 +30,11 @@ function setchildx! end
 Sets the probability to take the edge `edge` in the stochastic problem `sp` to `probability`.
 """
 function setprobability! end
+
+
+"""
+    edges(sp::AbstractStochasticProgram, node::AbstractNode)
+
+Returns iterable of outgoing edges in `node`.
+"""
+function edges end
