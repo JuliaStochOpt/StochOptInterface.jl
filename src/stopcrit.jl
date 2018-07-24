@@ -131,9 +131,11 @@ mutable struct Shapiro <: AbstractStoppingCriterion
     probability::Float64
 end
 
-function stop(s::Shapiro, to::TimerOutput, stats::AbstractStats, totalstats::AbstractStats)
-    tol = sqrt(2) * erfinv(2*probability - 1)
-    lb = stats.lowerbound
-    ubp = stats.upperbound + tol*stats.σ_UB/sqrt(stats.niterations)
-    totalstats.niterations >0 && abs(ubp - lb)/abs(lb+ubp) .<= 2*epsilon
+function stop(s::Shapiro, info::Info)
+    tol = √2 * erfinv(2*probability - 1)
+    result = last_result(info)
+    nits = niterations(info)
+    lb = result.lowerbound
+    ubp = result.upperbound + tol*result.σ_UB/√nits
+    nits > 0 && abs(ubp - lb)/abs(lb+ubp) .<= 2*epsilon
 end
