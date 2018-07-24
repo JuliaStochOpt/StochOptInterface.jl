@@ -5,14 +5,14 @@ using LightGraphs
 """
     AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int}
 
-Stochastic program instance
+Stochastic program instance.
 """
 abstract type AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int} end
 
 """
     stochasticprogram(args...)
 
-Creates a stochastic program from the arguments
+Create a stochastic program from the arguments.
 """
 function stochasticprogram end
 
@@ -30,7 +30,8 @@ function add_scenario_state! end
 """
     addcut!(sp::AbstractStochasticProgram, state, pool::SOI.AbstractSolutionPool, stats, ztol)
 
-Add cut `cut` to the state `state` using the solution pool `pool` and the threshold `ztol` to determine if the cut is redundant.
+Add cut `cut` to the state `state` using the solution pool `pool` and the
+threshold `ztol` to determine if the cut is redundant.
 The statistics are recorded in `stats`.
 """
 function addcut! end
@@ -47,7 +48,7 @@ function applycuts! end
 """
     AbstractTransition <: LightGraphs.AbstractEdge{Int}
 
-Transition between two states of the stochastic program
+Transition between two states of the stochastic program.
 """
 abstract type AbstractTransition <: LightGraphs.AbstractEdge{Int} end
 
