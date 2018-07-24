@@ -121,3 +121,19 @@ function stop(s::Pereira, stats::AbstractSDDPStats, totalstats::AbstractSDDPStat
         false
     end
 end
+
+
+
+"""
+$(TYPEDEF)
+
+Stops if the gap between the upper and lower bound is lower than ϵ.
+"""
+
+mutable struc Shapiro <: AbstractStoppingCriterion
+    epsilon::Float64
+end
+
+function stop(s::Shapiro, stats::AbstractSDDPStats, totalstats::AbstractSDDPStats)
+    totalstats.niterations > 0 && stats.upper_bounds - stats.upper_bounds_std .<= s.epsilon
+end
