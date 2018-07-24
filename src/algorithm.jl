@@ -8,6 +8,12 @@ struct SolutionSummary
     attrs
 end
 
+# Path represents a scenario along with a vector of AbstractSolution that corresponds to solutions for each node visited by the scenario
+struct Path{<:AbstractTransition, <: AbstractSolution}
+    scenario::Vector{<:AbstractTransition}
+    sol_scenario::Vector{<:AbstractSolution}
+end
+
 """
     optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, stopcrit::AbstractStoppingCriterion, verbose=0)
 
@@ -16,15 +22,15 @@ Run the algorithm `algo` on the stochastic program `sp` until the termination cr
 function optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, stopcrit::AbstractStoppingCriterion=IterLimit(), verbose=0)
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
-    mastersol = nothing
+    paths = nothing
     totalstats = Stats()
     stats = Stats()
     stats.niterations = 1
     totalto = TimerOutput()
     to = totalto
 
-    while (mastersol === nothing || getstatus(mastersol) != :Infeasible) && !stop(stopcrit, to, stats, totalstats)
-        @timeit totalto "iteration $(totalstats.niterations+1)" mastersol, stats = iterate!(sp, algo, totalto, verbose)
+    while (paths === nothing || getstatus(paths[1]) != :Infeasible) && !stop(stopcrit, to, stats, totalstats)
+        @timeit totalto "iteration $(totalstats.niterations+1)" paths, stats = iterate!(sp, algo, totalto, verbose)
         to = totalto["iteration $(totalstats.niterations+1)"]
         fto = TimerOutputs.flatten(totalto)
         totalstats += stats
@@ -66,23 +72,81 @@ Return the solution of the master state and the stats.
 function iterate!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to::TimerOutput, verbose)
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
-    paths, mastersol, stats = forwardpass!(sp, algo, to, verbose)
-    backwardpass!(sp, algo, paths, to, verbose)
+    paths, forward_stats = forward_pass(sp, algo, to, verbose)
+    backward_pass!(sp, algo, paths, to, verbose)
+
+    process!(sp, algo, paths, to, verbose)
+
     # Uses forward_stats in the RHS so that its values are used for upperbound, lowerbound, σ_UB and npaths
-    return mastersol, stats
+    paths, stats
 end
 
 """
-    forwardpass!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to::TimerOutput, verbose)
+    forward_pass(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to::TimerOutput, verbose)
 
 Run the forward pass of algorithm `algo` on the stochastic program `sp` with verbose level `verbose`.
-Returns the forward paths, the master state solution and the stats.
+Returns the forward paths and the stats.
 """
-function forwardpass! end
+function forward_pass(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to::TimerOutput, verbose)
+    # Default implementation, define a specific method for algorithms for which
+    # this default is not appropriate
+    forward_stats = SDDPStats()
+    scenarios = sample_scenarios(sp,algo,to,verbose)
+
+    paths = Vector{Path}(length(scenarios)) #Consider that sample_scenarios always return at least one scenario
+
+    i = 1
+    for s in scenarios
+        path = simulate_scenario(sp,s,to,verbose)
+        paths[i] = path
+        i += 1
+    end
+
+    # Stats update
+    z_UB, σ = compute_bounds(algo,paths)
+    forward_stats.npaths = length(paths)
+    forward_stats.lowerbound = getobjectivevalue(paths[1])
+    forward_stats.upperbound = z_UB
+    forward_stats.σ_UB = σ
+
+    paths, forward_stats
+end
 
 """
-    backwardpass!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, paths, to::TimerOutput, verbose)
+    backward_pass!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, paths::Vector{Path}, to::TimerOutput, verbose)
 
 Run the backward pass of algorithm `algo` on the stochastic program `sp` for the paths `paths` with verbose level `verbose`.
 """
-function backwardpass! end
+function backward_pass! end
+
+"""
+    simulate_scenario(sp::AbstractStochasticProgram, scenario::Vector{<:AbstractTransition}, to::TimerOutput, verbose)
+
+Simulate a scenario `scenario` on the stochastic program `sp` with verbose level `verbose`.
+"""
+function simulate_scenario end
+
+"""
+    sample_scenarios(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to::TimerOutput, verbose)
+
+Return a vector of scenarios where each scenario is a vector of AbstractTransition from the stochastic program `sp`
+sampled according to algorithm `algo` with verbose level `verbose`.
+"""
+function sample_scenarios end
+
+"""
+    compute_bounds(algo::AbstractAlgorithm, paths::Vector{Path}, verbose)
+
+Return a tuple `(z_UB, σ)` where z_UB reprensets the upperbound computed by the algorithm `algo` by using paths `paths`
+generated during the forward pass and σ represents the standard deviation of this upper bound.
+"""
+function compute_bounds end
+
+"""
+    process(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, paths::Vector{Path}, to::TimerOutput)
+
+Function called at the end of function iterate! to update necessary elements related with the implementation of the
+algorithm `algo` on the stochastic program `sp` considering forward paths `paths`.
+"""
+function process!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, paths::Vector{Path}, to::TimerOutput, verbose)
+end
