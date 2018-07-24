@@ -133,7 +133,7 @@ mutable struct Shapiro <: AbstractStoppingCriterion
     tol::Float64
 end
 
-function stop(s::Pereira, to::TimerOutput, stats::AbstractStats, totalstats::AbstractStats)
+function stop(s::Shapiro, to::TimerOutput, stats::AbstractStats, totalstats::AbstractStats)
     lb = stats.lowerbound
     ubp = stats.upperbound + tol*stats.σ_UB/sqrt(stats.niterations)
     totalstats.niterations >0 && abs(ubp - lb)/lb .<= epsilon
