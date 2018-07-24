@@ -9,9 +9,9 @@ struct SolutionSummary
 end
 
 # Path represents a scenario along with a vector of AbstractSolution that corresponds to solutions for each node visited by the scenario
-struct Path{<:AbstractTransition, <: AbstractSolution}
-    scenario::Vector{<:AbstractTransition}
-    sol_scenario::Vector{<:AbstractSolution}
+struct Path{T<:AbstractTransition, SolT<:AbstractSolution}
+    scenario::Vector{T}
+    sol_scenario::Vector{SolT}
 end
 
 """
@@ -46,13 +46,13 @@ Return the solution of the master state and the stats.
 function iterate!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to::TimerOutput, verbose)
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
-    paths, forward_stats = forward_pass(sp, algo, to, verbose)
+    paths, forward_result = forward_pass(sp, algo, to, verbose)
     backward_pass!(sp, algo, paths, to, verbose)
 
     process!(sp, algo, paths, to, verbose)
 
     # Uses forward_stats in the RHS so that its values are used for upperbound, lowerbound, σ_UB and npaths
-    paths, stats
+    paths, forward_result
 end
 
 """
@@ -65,13 +65,13 @@ function forward_pass(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
     forward_stats = SDDPStats()
-    scenarios = sample_scenarios(sp,algo,to,verbose)
+    scenarios = sample_scenarios(sp, algo, to, verbose)
 
     paths = Vector{Path}(length(scenarios)) #Consider that sample_scenarios always return at least one scenario
 
     i = 1
     for s in scenarios
-        path = simulate_scenario(sp,s,to,verbose)
+        path = simulate_scenario(sp, s, to, verbose)
         paths[i] = path
         i += 1
     end
