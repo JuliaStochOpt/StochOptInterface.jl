@@ -122,18 +122,19 @@ function stop(s::Pereira, to::TimerOutput, stats::AbstractStats, totalstats::Abs
     end
 end
 
-
-
 """
 $(TYPEDEF)
 
-Stops if the gap between the upper and lower bound is lower than ϵ.
+Stop if the relative gap between upper and lower bounds is less than epsilon (abs(ubp-lb)/lb) <= epsilon
 """
 
-mutable struc Shapiro <: AbstractStoppingCriterion
-    epsilon::Float64
+mutable struct Shapiro <: AbstractStoppingCriterion
+    epsilon:: Float64
+    tol::Float64
 end
 
-function stop(s::Shapiro, stats::AbstractSDDPStats, totalstats::AbstractSDDPStats)
-    totalstats.niterations > 0 && stats.upper_bounds - stats.upper_bounds_std .<= s.epsilon
+function stop(s::Pereira, to::TimerOutput, stats::AbstractStats, totalstats::AbstractStats)
+    lb = stats.lowerbound
+    ubp = stats.upperbound + tol*stats.σ_UB/sqrt(stats.niterations)
+    totalstats.niterations >0 && abs(ubp - lb)/lb .<= epsilon
 end
