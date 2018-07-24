@@ -125,16 +125,17 @@ end
 """
 $(TYPEDEF)
 
-Stop if the relative gap between upper and lower bounds is less than epsilon (abs(ubp-lb)/lb) <= epsilon
+Stop if the relative gap between upper and lower bounds is less than epsilon (abs(ubp-lb)/abs(lb+ubp)) <= 2*epsilon
 """
 
 mutable struct Shapiro <: AbstractStoppingCriterion
     epsilon:: Float64
-    tol::Float64
+    probability::Float64
 end
 
 function stop(s::Shapiro, to::TimerOutput, stats::AbstractStats, totalstats::AbstractStats)
+    tol = sqrt(2) * erfinv(2*probability - 1)
     lb = stats.lowerbound
     ubp = stats.upperbound + tol*stats.σ_UB/sqrt(stats.niterations)
-    totalstats.niterations >0 && abs(ubp - lb)/lb .<= epsilon
+    totalstats.niterations >0 && abs(ubp - lb)/abs(lb+ubp) .<= 2*epsilon
 end
