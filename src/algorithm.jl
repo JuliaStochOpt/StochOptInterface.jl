@@ -13,7 +13,7 @@ end
 
 Run the algorithm `algo` on the stochastic program `sp` until the termination criterion `stopcrit` requires stopping with verbose level `verbose`.
 """
-function optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, stopcrit::AbstractStoppingCriterion=Shapiro(), verbose=0)
+function optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, stopcrit::AbstractStoppingCriterion=IterLimit(), verbose=0)
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
     mastersol = nothing
