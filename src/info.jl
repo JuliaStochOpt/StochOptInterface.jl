@@ -38,6 +38,8 @@ mutable struct Result
     # n forwards passes of last computation of upper-bound in the
     # form of path vector:
     paths::AbstractPaths
+    # current status
+    status::Symbol
     # current lower bound
     lowerbound::Float64
     # current Monte-Carlo upperbound
@@ -45,8 +47,9 @@ mutable struct Result
     # upper-bound std:
     σ_UB::Float64
 end
-Result() = Result(Paths(Path[]), 0.0, Inf, 0.0)
-npaths(result::Result) = length(result.paths)
+
+Result() = Result(Paths(Path[]), :Unbounded, 0.0, Inf, 0.0)
+npaths(result::Result) = length(result.paths.paths)
 
 function Base.show(io::IO, result::Result)
     println(io, "Exact Lower Bound: $(result.lowerbound)")
@@ -87,5 +90,11 @@ end
 
 function print_iteration_summary(info::Info)
     println("Iteration $(niterations(info))")
-    println(last_timer)
+    println(last_timer(info))
+    println(last_result(info))
+end
+
+function print_termination_summary(info::Info)
+    println(TimerOutputs.flatten(info.timer))
+    println(last_result(info))
 end
