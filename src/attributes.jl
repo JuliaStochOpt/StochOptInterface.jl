@@ -223,11 +223,11 @@ struct TransitionObjectiveValueBound <: AbstractNodeAttribute end
     RandomTransition <: AbstractNodeAttribute
 
 return a randomly selected transition from node `node`
-    ### Examples
+### Examples
 
-    ```julia
-    get(model, RandomTransition(), node)
-    ```
+```julia
+get(model, RandomTransition(), node)
+```
 """
 struct RandomTransition <: AbstractNodeAttribute end
 function get(sp::AbstractStochasticProgram, tr::RandomTransition, node::Int)
