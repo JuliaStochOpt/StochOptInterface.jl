@@ -20,7 +20,7 @@ function SOI.sample_scenarios(sp::MockStochasticProgram, algo::MockAlgorithm, to
                               verbose)
     [fill(MockTransition(), 2) for i in 1:algo.npaths]
 end
-function SOI.compute_bounds(algo::MockAlgorithm, paths::Vector{SOI.Path}, verbose)
+function SOI.compute_bounds(algo::MockAlgorithm, paths::SOI.Paths, verbose)
     0.0, 0.0
 end
 
