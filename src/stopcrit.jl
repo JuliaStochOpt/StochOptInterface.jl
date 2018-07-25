@@ -107,7 +107,7 @@ function stop(s::Pereira, info::Info)
         result = last_result(info)
         z_UB = result.upperbound
         z_LB = result.lowerbound
-        K = result.npaths
+        K = npaths(result)
         σ = result.σ_UB
 
         @assert K >= 0

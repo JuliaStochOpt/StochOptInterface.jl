@@ -7,8 +7,8 @@ nocuts(to) = ncalls(to, OCUTS_KEY)
 iteration_key(it) = "iteration $it"
 
 mutable struct Result
-    # n forwards passes of last computation of upper-bound:
-    npaths::Int
+    # n forwards passes of last computation of upper-bound in the form of path vector:
+    paths::Vector{Path}
     # current lower bound
     lowerbound::Float64
     # current lower bound
@@ -17,6 +17,7 @@ mutable struct Result
     σ_UB::Float64
 end
 Result() = Result(0, 0.0, Inf, 0.0)
+npaths(result::Result) = length(result.paths)
 function Base.show(io::IO, result::Result)
     println(io, "Lower Bound: $(result.lowerbound)")
     println(io, "Upper Bound: $(result.upperbound)")
