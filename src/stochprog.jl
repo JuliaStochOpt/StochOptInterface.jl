@@ -5,14 +5,14 @@ using LightGraphs
 """
     AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int}
 
-Stochastic program instance
+Stochastic program instance.
 """
 abstract type AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int} end
 
 """
     stochasticprogram(args...)
 
-Creates a stochastic program from the arguments
+Create a stochastic program from the arguments.
 """
 function stochasticprogram end
 
