@@ -13,6 +13,11 @@ end
 
 ################################################################################
 # Utilities to manipulate TimerOutput object
+"""
+    ncalls(to::TimerOutput, key::String)
+
+Number of calls to evaluate objects specified by `key`.
+"""
 function ncalls(to::TimerOutput, key::String)
     return haskey(to.inner_timers, key) ? TimerOutputs.ncalls(to[key]) : 0
 end
