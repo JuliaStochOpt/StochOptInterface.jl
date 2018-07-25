@@ -20,7 +20,7 @@ function optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
         if verbose >= 3
             print_iteration_summary(info)
         end
-        if result.status != :Infeasible
+        if result.status == :Infeasible
             break
         end
     end

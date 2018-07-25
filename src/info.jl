@@ -35,7 +35,7 @@ mutable struct Result
     σ_UB::Float64
 end
 Result() = Result(Paths(Path[]), :Unbounded, 0.0, Inf, 0.0)
-npaths(result::Result) = length(result.paths)
+npaths(result::Result) = length(result.paths.paths)
 function Base.show(io::IO, result::Result)
     println(io, "Exact Lower Bound: $(result.lowerbound)")
     println(io, "Monte-Carlo Upper Bound: $(result.upperbound)")
