@@ -20,7 +20,7 @@ function optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
         if verbose >= 3
             print_iteration_summary(info)
         end
-        if getstatus(result.paths[1].sol_scenario[1]) != :Infeasible
+        if getstatus(result.paths.paths[1].sol_scenario[1]) != :Infeasible
             break
         end
     end
@@ -69,16 +69,15 @@ function forward_pass!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
     paths = Vector{Path}(length(scenarios)) #Consider that sample_scenarios
                                             #always return at least one scenario
 
-    i = 1
-    for s in scenarios
+    for (i, s) in enumerate(scenarios)
         path = simulate_scenario(sp, algo, s, to, verbose)
         paths[i] = path
-        i += 1
     end
 
+    paths_struct = Paths(paths)
     # Result update
-    z_UB, σ = compute_bounds(algo, paths, verbose)
-    result.paths = paths
+    z_UB, σ = compute_bounds(algo, paths_struct, verbose)
+    result.paths = paths_struct
     result.upperbound = z_UB
     result.σ_UB = σ
 end
@@ -114,7 +113,7 @@ algorithm `algo` with verbose level `verbose`.
 function sample_scenarios end
 
 """
-    compute_bounds(algo::AbstractAlgorithm, paths::Vector{Path}, verbose)
+    compute_bounds(algo::AbstractAlgorithm, paths::AbstractPaths, verbose)
 
 Return a tuple `(z_UB, σ)` where z_UB reprensets the upperbound computed by the
 algorithm `algo` by using paths `paths` generated during the forward pass and σ

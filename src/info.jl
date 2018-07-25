@@ -15,10 +15,16 @@ struct Path{T<:AbstractTransition, SolT<:AbstractSolution}
     sol_scenario::Vector{SolT}
 end
 
+abstract type AbstractPaths end
+
+struct Paths <: AbstractPaths
+    paths::Vector{Path}
+end
+
 mutable struct Result
     # n forwards passes of last computation of upper-bound in the
     # form of path vector:
-    paths::Vector{Path}
+    paths::AbstractPaths
     # current lower bound
     lowerbound::Float64
     # current Monte-Carlo upperbound
@@ -26,7 +32,7 @@ mutable struct Result
     # upper-bound std:
     σ_UB::Float64
 end
-Result() = Result(Path[], 0.0, Inf, 0.0)
+Result() = Result(Paths(Path[]), 0.0, Inf, 0.0)
 npaths(result::Result) = length(result.paths)
 function Base.show(io::IO, result::Result)
     println(io, "Exact Lower Bound: $(result.lowerbound)")
