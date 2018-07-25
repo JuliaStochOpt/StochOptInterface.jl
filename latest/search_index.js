@@ -77,7 +77,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Stopping Criterion",
     "title": "StochOptInterface.Pereira",
     "category": "type",
-    "text": "type Pereira <: StochOptInterface.AbstractStoppingCriterion\n\nStops if z_UB - α * σ/√K - tol < z_LB < z_UB + α * σ/√K + tol and σ / √K > β * max(1, |z_LB|))\n\n\n\n"
+    "text": "type Pereira <: StochOptInterface.AbstractStoppingCriterion\n\nStops if z_UB - α * σ/√K - tol < z_LB < z_UB + α * σ/√K + tol and     σ / √K > β * max(1, |z_LB|))\n\n\n\n"
 },
 
 {
