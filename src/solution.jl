@@ -1,4 +1,4 @@
-# Solution at one state, different than Solution with is the full solution
+# Solution at one node, different than Solution with is the full solution
 abstract type AbstractSolution end
 
 """
@@ -33,20 +33,20 @@ objective depending on `θ`.
 function getobjectivevalue end
 
 """
-    getstateobjectivevalue(sol::AbstractSolution)
+    getnodeobjectivevalue(sol::AbstractSolution)
 
 Returns the objective value of the solution `sol` *excluding* the part of the
 objective depending on `θ`.
 """
-function getstateobjectivevalue end
+function getnodeobjectivevalue end
 
 
 """
-    getstatevalue(sol::AbstractSolution)
+    getnodevalue(sol::AbstractSolution)
 
-Returns the value of the state of solution `sol`.
+Returns the value of the node of solution `sol`.
 """
-function getstatevalue end
+function getnodevalue end
 
 """
     getθvalue(sp::AbstractStochasticProgram, tr::AbstractTransition,

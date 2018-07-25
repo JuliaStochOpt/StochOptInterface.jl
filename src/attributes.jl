@@ -9,12 +9,12 @@ attributes (properties) of the stochastic program.
 abstract type AbstractStochasticProgramAttribute end
 
 """
-    AbstractStateAttribute
+    AbstractNodeAttribute
 
 Abstract supertype for attribute objects that can be used to set or get
-attributes (properties) of states in the stochastic program.
+attributes (properties) of nodes in the stochastic program.
 """
-abstract type AbstractStateAttribute end
+abstract type AbstractNodeAttribute end
 
 """
     AbstractTransitionAttribute
@@ -29,9 +29,9 @@ abstract type AbstractTransitionAttribute end
 
 Return an attribute `attr` of the stochastic program `sp`.
 
-    get(sp::AbstractStochasticProgram, attr::AbstractStateAttribute, state)
+    get(sp::AbstractStochasticProgram, attr::AbstractNodeAttribute, node)
 
-Return an attribute `attr` of the state `state` in stochastic program `sp`.
+Return an attribute `attr` of the node `node` in stochastic program `sp`.
 
     get(sp::AbstractStochasticProgram, attr::AbstractTransitionAttribute,
         tr::AbstractTransition)
@@ -41,8 +41,8 @@ Return an attribute `attr` of the transition `tr` in stochastic program `sp`.
 ### Examples
 
 ```julia
-get(model, MasterState())
-get(model, Solution(), state)
+get(model, MasterNode())
+get(model, Solution(), node)
 get(model, Probability(), tr)
 ```
 """
@@ -54,10 +54,10 @@ function get end
 
 Assign `value` to the attribute `attr` of the stochastic program `sp`.
 
-    set!(sp::AbstractStochasticProgram, attr::AbstractStateAttribute, state,
+    set!(sp::AbstractStochasticProgram, attr::AbstractNodeAttribute, node,
          value)
 
-Assign `value` to the attribute `attr` of the state `state` in stochastic
+Assign `value` to the attribute `attr` of the node `node` in stochastic
 program `sp`.
 
     set!(sp::AbstractStochasticProgram, attr::AbstractTransitionAttribute,
@@ -69,7 +69,7 @@ program `sp`.
 ### Examples
 
 ```julia
-set!(model, CutGenerator(), state, cutgen)
+set!(model, CutGenerator(), node, cutgen)
 set!(model, SourceSolution(), tr, sol)
 ```
 """
@@ -78,17 +78,17 @@ function set! end
 ## Stochastic Program attributes
 
 """
-    MasterState <: AbstractStochasticProgramAttribute
+    MasterNode <: AbstractStochasticProgramAttribute
 
-The master state.
+The master node.
 """
-struct MasterState <: AbstractStochasticProgramAttribute end
+struct MasterNode <: AbstractStochasticProgramAttribute end
 
 """
     TransitionType <: AbstractStochasticProgramAttribute
 
 The type of the transitions, i.e.
-    `typeof(first(get(sp, OutTransitions(), state)))`.
+    `typeof(first(get(sp, OutTransitions(), node)))`.
 """
 struct TransitionType <: AbstractStochasticProgramAttribute end
 
@@ -96,8 +96,8 @@ struct TransitionType <: AbstractStochasticProgramAttribute end
     NumberOfStages <: AbstractStochasticProgramAttribute
 
 The number of stages of the stochastic program.
-A path starting from the master state of length equal to the number of stages
-does not necessarily have to end with a state with no outgoing edges.
+A path starting from the master node of length equal to the number of stages
+does not necessarily have to end with a node with no outgoing edges.
 The stochastic program can even contain infinite paths and `NumberOfStages` is
 used to truncate the exploration.
 """
@@ -108,79 +108,79 @@ struct NumberOfStages <: AbstractStochasticProgramAttribute end
         length::Int
     end
 
-The number of paths of length `length` starting from the master state.
+The number of paths of length `length` starting from the master node.
 """
 struct NumberOfPaths <: AbstractStochasticProgramAttribute
     length::Int
 end
 function get(sp::AbstractStochasticProgram, nop::NumberOfPaths)
-    get(sp, NumberOfPathsFrom(nop.length), get(sp, MasterState()))
+    get(sp, NumberOfPathsFrom(nop.length), get(sp, MasterNode()))
 end
 
-## State attributes
+## Node attributes
 
 # Graph-related
 """
     struct OutTransitions
 
-The outgoing transitions from the state.
+The outgoing transitions from the node.
 """
-struct OutTransitions <: AbstractStateAttribute end
+struct OutTransitions <: AbstractNodeAttribute end
 
 # May be different from the number of out-neighbors if there are multiple
 # transitions with the same target
-function LightGraphs.outdegree(sp::AbstractStochasticProgram, state::Int)
-    length(get(sp, OutTransitions(), state))
+function LightGraphs.outdegree(sp::AbstractStochasticProgram, node::Int)
+    length(get(sp, OutTransitions(), node))
 end
 
 """
-    struct NumberOfPathsFrom <: AbstractStateAttribute
+    struct NumberOfPathsFrom <: AbstractNodeAttribute
         length::Int
     end
 
-The number of paths of length `length` starting from the state.
+The number of paths of length `length` starting from the node.
 """
-struct NumberOfPathsFrom <: AbstractStateAttribute
+struct NumberOfPathsFrom <: AbstractNodeAttribute
     length::Int
 end
 
 # Optimization-related
 """
-    Solution <: AbstractStateAttribute
+    Solution <: AbstractNodeAttribute
 
-The solution at the state.
+The solution at the node.
 """
-struct Solution <: AbstractStateAttribute end
+struct Solution <: AbstractNodeAttribute end
 
 """
-    Dimension <: AbstractStateAttribute
+    Dimension <: AbstractNodeAttribute
 
-The number of variables of the stochastic program at the state (not including
+The number of variables of the stochastic program at the node (not including
 the auxiliary variables used for the objective value of its outgoing transitions
 """
-struct Dimension <: AbstractStateAttribute end
+struct Dimension <: AbstractNodeAttribute end
 
 """
-    NeedAllSolutions <: AbstractStateAttribute
+    NeedAllSolutions <: AbstractNodeAttribute
 
-A `Bool` indicating whether the state needs all solutions in the solution pool
+A `Bool` indicating whether the node needs all solutions in the solution pool
 in order to generate an optimality cut.
 """
-struct NeedAllSolutions <: AbstractStateAttribute end
+struct NeedAllSolutions <: AbstractNodeAttribute end
 
 """
-    StateObjectiveValueBound <: AbstractStateAttribute
+    NodeObjectiveValueBound <: AbstractNodeAttribute
 
-The current bound to the objective of the state.
+The current bound to the objective of the node.
 
 ### Examples
 
-If the program at state `state` is bounded and the objective value of its
+If the program at node `node` is bounded and the objective value of its
 outgoing transtitions is bounded too (e.g. `TransitionObjectiveValueBound`
-has been set to a finite value), `MOI.get(sp, state)` returns a finite value
+has been set to a finite value), `MOI.get(sp, node)` returns a finite value
 summing.
 """
-struct StateObjectiveValueBound <: AbstractStateAttribute end
+struct NodeObjectiveValueBound <: AbstractNodeAttribute end
 
 ## Transition attributes
 
@@ -213,8 +213,8 @@ The solution of the source of a transition to be used by its destination.
 struct SourceSolution <: AbstractTransitionAttribute end
 
 """
-    TransitionObjectiveValueBound <: AbstractStateAttribute
+    TransitionObjectiveValueBound <: AbstractNodeAttribute
 
-The current bound to the objective of the state.
+The current bound to the objective of the node.
 """
-struct TransitionObjectiveValueBound <: AbstractStateAttribute end
+struct TransitionObjectiveValueBound <: AbstractNodeAttribute end
