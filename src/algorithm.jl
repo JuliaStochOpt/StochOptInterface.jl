@@ -8,7 +8,7 @@ Run the algorithm `algo` on the stochastic program `sp` until the termination
 criterion `stopcrit` requires stopping with verbose level `verbose`.
 """
 function optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
-                   stopcrit::AbstractStoppingCriterion=IterLimit(), verbose=0)
+                   stopcrit::AbstractStoppingCriterion=IterLimit(100), verbose=0)
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
     info = Info()
@@ -77,7 +77,7 @@ function forward_pass!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
     end
 
     # Result update
-    z_UB, σ = compute_bounds(algo,paths)
+    z_UB, σ = compute_bounds(algo, paths, verbose)
     result.paths = paths
     result.upperbound = z_UB
     result.σ_UB = σ
