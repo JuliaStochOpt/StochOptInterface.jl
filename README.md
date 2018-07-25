@@ -7,6 +7,11 @@
 
 A generic package to write stochastic programs easily
 
+## Documentation
+
+- [**STABLE**][docs-stable-url] &mdash; **most recently tagged version of the documentation.**
+- [**LATEST**][docs-latest-url] &mdash; *in-development version of the documentation.*
+
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-latest-img]: https://img.shields.io/badge/docs-latest-blue.svg
 [docs-stable-url]: https://juliastochopt.github.io/StochOptInterface.jl/stable
