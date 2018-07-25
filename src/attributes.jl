@@ -156,7 +156,7 @@ struct Solution <: AbstractNodeAttribute end
     Dimension <: AbstractNodeAttribute
 
 The number of variables of the stochastic program at the node (not including
-the auxiliary variables used for the objective value of its outgoing transitions
+the auxiliary variables used for the objective value of its outgoing transitions.
 """
 struct Dimension <: AbstractNodeAttribute end
 

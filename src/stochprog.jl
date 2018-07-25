@@ -54,7 +54,7 @@ function applycuts! end
 """
     AbstractTransition <: LightGraphs.AbstractEdge{Int}
 
-Transition between two nodes of the stochastic program
+Transition between two nodes of the stochastic program.
 """
 abstract type AbstractTransition <: LightGraphs.AbstractEdge{Int} end
 
