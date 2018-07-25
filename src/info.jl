@@ -26,7 +26,7 @@ mutable struct Result
     # upper-bound std:
     σ_UB::Float64
 end
-Result() = Result(0, 0.0, Inf, 0.0)
+Result() = Result(Path[], 0.0, Inf, 0.0)
 npaths(result::Result) = length(result.paths)
 function Base.show(io::IO, result::Result)
     println(io, "Lower Bound: $(result.lowerbound)")

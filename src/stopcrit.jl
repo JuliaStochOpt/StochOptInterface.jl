@@ -114,8 +114,8 @@ function stop(s::Pereira, info::Info)
 
         @assert K >= 0
         σ1 = σ / √K
-        # On the test optimize_stock with Clp, z_LB = -2, z_UB = -1.999999999999
-        # and σ1 = 0
+        # On the test optimize_stock with Clp, z_LB = -2,
+        #z_UB = -1.999999999999 and σ1 = 0
         # this shows the necessicity for a tolerance
         σ2 = s.α * σ1 + s.tol
         z_UB - σ2 <= z_LB <= z_UB + σ2 && σ1 < s.β * max(1, abs(z_LB))
