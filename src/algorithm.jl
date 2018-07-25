@@ -112,7 +112,7 @@ algorithm `algo` with verbose level `verbose`.
 """
 function sample_scenarios end
 
-function sample_scenarios(sp::AbstractStochasticProgram, n::Int, depth_max = 1000;to::TimerOutput, verbose)
+function sample_scenarios(sp::AbstractStochasticProgram, n::Int, depth_max = 1000,to::TimerOutput=TimerOutput(), verbose::Int=0)
     scenarios = []
     for i = 1:n
         push!(scenarios,sample_scenario(sp, depth_max))
@@ -120,7 +120,7 @@ function sample_scenarios(sp::AbstractStochasticProgram, n::Int, depth_max = 100
     return scenarios
 end
 
-function sample_scenario(sp::AbstractStochasticProgram, depth_max = 1000;to::TimerOutput, verbose)
+function sample_scenario(sp::AbstractStochasticProgram, depth_max = 1000,to::TimerOutput=TimerOutput(), verbose::Int=0)
     node = get(sp,MasterNode())
     s = []
     it = 0
