@@ -1,8 +1,8 @@
 # StochOptInterface
 
-| **Documentation** || **Build Status** | **Social** |
-|:-----------------:||:----------------:|:----------:|
-| | [![Build Status][build-img]][build-url] | [![Gitter][gitter-img]][gitter-url] |
+|           **Documentation**             |                 **Build Status**              |               **Social**            |
+|:---------------------------------------:|:---------------------------------------------:|:-----------------------------------:|
+|                                         |    [![Build Status][build-img]][build-url]    | [![Gitter][gitter-img]][gitter-url] |
 | [![][docs-latest-img]][docs-latest-url] | [![Codecov branch][codecov-img]][codecov-url] | [<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Discourse_logo.png/799px-Discourse_logo.png" width="64">][discourse-url] |
 
 A generic package to write stochastic programs easily
