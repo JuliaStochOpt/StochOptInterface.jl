@@ -230,9 +230,9 @@ return a randomly selected transition from node `node`
     ```
 """
 struct RandomTransition <: AbstractNodeAttribute end
-function get(sp::AbstractStochasticProgram, tr::RandomTransition,node::Int)
+function get(sp::AbstractStochasticProgram, tr::RandomTransition, node::Int)
     r = rand()
-    cdf = 0
+    cdf = 0.
     for tr in get(sp,OutTransitions(),node)
         if cdf >= r
              cdf += get(sp, Probability(), tr)
@@ -245,8 +245,8 @@ end
 
 struct IsLeaf <: AbstractNodeAttribute end
 function get(sp::AbstractStochasticProgram, node::Int)
-    return isempty(get(sp,OutTransitions(),node))
+    return isempty(get(sp, OutTransitions(), node))
 end
 function is_empty(sp::AbstractStochasticProgram, node::Int)
-    return get(sp,IsLeaf(),node)
+    return get(sp, IsLeaf(), node)
 end
