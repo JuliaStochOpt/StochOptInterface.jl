@@ -9,17 +9,17 @@ iteration_key(it) = "iteration $it"
 mutable struct Result
     # n forwards passes of last computation of upper-bound:
     npaths::Int
-    # current lower bound
+    # current exact lower bound
     lowerbound::Float64
-    # current lower bound
+    # current Monte-Carlo upperbound
     upperbound::Float64
     # upper-bound std:
     σ_UB::Float64
 end
 Result() = Result(0, 0.0, Inf, 0.0)
 function Base.show(io::IO, result::Result)
-    println(io, "Lower Bound: $(result.lowerbound)")
-    println(io, "Upper Bound: $(result.upperbound)")
+    println(io, "Exact Lower Bound: $(result.lowerbound)")
+    println(io, "Monte-Carlo Upper Bound: $(result.upperbound)")
 end
 
 struct Info
