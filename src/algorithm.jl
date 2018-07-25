@@ -1,20 +1,5 @@
 abstract type AbstractAlgorithm end
 
-# Solution of the full optimization, not an AbstractSolution
-struct SolutionSummary
-    status
-    objval
-    sol
-    attrs
-end
-
-# Path represents a scenario along with a vector of AbstractSolution that
-# corresponds to solutions for each node visited by the scenario
-struct Path{T<:AbstractTransition, SolT<:AbstractSolution}
-    scenario::Vector{T}
-    sol_scenario::Vector{SolT}
-end
-
 """
     optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
               stopcrit::AbstractStoppingCriterion, verbose=0)

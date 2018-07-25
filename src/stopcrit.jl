@@ -3,8 +3,8 @@ abstract type AbstractStoppingCriterion end
 """
     stop(s::AbstractStoppingCriterion, info)
 
-Determine whether the SDDP algorithm should stop using the information stored in
-`info`.
+Determine whether the SDDP algorithm should stop using the information
+stored in `info`.
 """
 function stop(s::AbstractStoppingCriterion, info::Info)
     error("`stop' function not defined for $(typeof(s))")

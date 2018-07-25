@@ -8,12 +8,12 @@ using DocStringExtensions
 include("stochprog.jl")
 include("attributes.jl")
 
+# Solution
+include("solution.jl")
 # Result informations and timing/allocation statistics
 include("info.jl")
 # Stopping Criterion
 include("stopcrit.jl")
-# Solution
-include("solution.jl")
 
 # Algorithm
 include("algorithm.jl")

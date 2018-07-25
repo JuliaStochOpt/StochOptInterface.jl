@@ -8,6 +8,13 @@ const OCUTS_KEY = "ocuts"
 nocuts(to) = ncalls(to, OCUTS_KEY)
 iteration_key(it) = "iteration $it"
 
+# Path represents a scenario along with a vector of AbstractSolution that
+# corresponds to solutions for each node visited by the scenario
+struct Path{T<:AbstractTransition, SolT<:AbstractSolution}
+    scenario::Vector{T}
+    sol_scenario::Vector{SolT}
+end
+
 mutable struct Result
     # n forwards passes of last computation of upper-bound in the
     # form of path vector:
