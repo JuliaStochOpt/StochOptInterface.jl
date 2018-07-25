@@ -61,5 +61,11 @@ end
 
 function print_iteration_summary(info::Info)
     println("Iteration $(niterations(info))")
-    println(last_timer)
+    println(last_timer(info))
+    println(last_result(info))
+end
+
+function print_termination_summary(info::Info)
+    println(TimerOutputs.flatten(info.timer))
+    println(last_result(info))
 end

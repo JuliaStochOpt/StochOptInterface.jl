@@ -27,6 +27,6 @@ end
 @testset "Mock tests" begin
     sp = MockStochasticProgram()
     algo = MockAlgorithm(2)
-    info = SOI.optimize!(sp, algo, SOI.IterLimit(100))
+    info = SOI.optimize!(sp, algo, SOI.IterLimit(100), 3)
     @test info.results[end].lowerbound == 0.0
 end
