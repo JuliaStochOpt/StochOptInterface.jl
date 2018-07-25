@@ -16,31 +16,31 @@ Creates a stochastic program from the arguments
 """
 function stochasticprogram end
 
-## State
+## Node
 
-# The type of states is `Int` for compatibility with LightGraphs' nodes
-
-"""
-    add_scenario_state!(sp::AbstractStochasticProgram, ...)
-
-Add a new state to the stochastic program `sp` and returns it.
-"""
-function add_scenario_state! end
+# The type of nodes is `Int` for compatibility with LightGraphs' nodes
 
 """
-    addcut!(sp::AbstractStochasticProgram, state,
+    add_scenario_node!(sp::AbstractStochasticProgram, ...)
+
+Add a new node to the stochastic program `sp` and returns it.
+"""
+function add_scenario_node! end
+
+"""
+    addcut!(sp::AbstractStochasticProgram, node,
             pool::SOI.AbstractSolutionPool, stats, ztol)
 
-Add cut `cut` to the state `state` using the solution pool `pool` and the
+Add cut `cut` to the node `node` using the solution pool `pool` and the
 threshold `ztol` to determine if the cut is redundant. The statistics are
 recorded in `stats`.
 """
 function addcut! end
 
 """
-    applycuts!(sp::AbstractStochasticProgram, state)
+    applycuts!(sp::AbstractStochasticProgram, node)
 
-Apply cuts additions to the state `state`.
+Apply cuts additions to the node `node`.
 """
 function applycuts! end
 
@@ -49,7 +49,7 @@ function applycuts! end
 """
     AbstractTransition <: LightGraphs.AbstractEdge{Int}
 
-Transition between two states of the stochastic program
+Transition between two nodes of the stochastic program
 """
 abstract type AbstractTransition <: LightGraphs.AbstractEdge{Int} end
 

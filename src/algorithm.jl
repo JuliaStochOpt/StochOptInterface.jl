@@ -35,7 +35,7 @@ end
              to::TimerOutput, verbose)
 
 Run one iteration of the algorithm `algo` on the stochastic program `sp` with
-verbose level `verbose`. Return the solution of the master state and the stats.
+verbose level `verbose`. Return the result in a `Result` struct.
 """
 function iterate!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
                   to::TimerOutput, verbose)
