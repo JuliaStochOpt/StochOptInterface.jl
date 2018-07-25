@@ -18,7 +18,12 @@ function stochasticprogram end
 
 ## Node
 
-# The type of nodes is `Int` for compatibility with LightGraphs' nodes
+"""
+    AbstractNode
+
+Node instance.
+"""
+abstract type AbstractNode end
 
 """
     add_scenario_node!(sp::AbstractStochasticProgram, ...)

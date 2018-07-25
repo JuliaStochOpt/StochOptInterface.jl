@@ -122,8 +122,8 @@ represents the standard deviation of this upper bound.
 function compute_bounds end
 
 """
-    process(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
-            to::TimerOutput, result::Result, verbose)
+    process!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
+             to::TimerOutput, result::Result, verbose)
 
 Function called at the end of function iterate! to update necessary elements
 related with the implementation of the algorithm `algo` on the stochastic

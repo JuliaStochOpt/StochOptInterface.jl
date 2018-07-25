@@ -28,7 +28,7 @@ function getstatus end
     getobjectivevalue(sol::AbstractSolution)
 
 Return the objective value of the solution `sol` *including* the part of the
-objective depending on `θ`.
+objective depending on Bellman value function `θ`.
 """
 function getobjectivevalue end
 
@@ -36,7 +36,7 @@ function getobjectivevalue end
     getnodeobjectivevalue(sol::AbstractSolution)
 
 Return the objective value of the solution `sol` *excluding* the part of the
-objective depending on `θ`.
+objective depending on Bellman value function `θ`.
 """
 function getnodeobjectivevalue end
 
@@ -49,19 +49,19 @@ Return the value of the state of solution `sol`.
 function getnodevalue end
 
 """
-    getθvalue(sp::AbstractStochasticProgram, tr::AbstractTransition,
+    getbellmanvalue(sp::AbstractStochasticProgram, tr::AbstractTransition,
               sol::AbstractSolution)
 
-Return the value of the θ in the solution `sol` of node
+Return the value of the Bellman function in the solution `sol` of node
 `SOI.get(sp, SOI.Source(), tr)` for its transition `tr`.
 This assumes that `node` is using `MultiCutGenerator`.
 
-    getθvalue(sp::AbstractStochasticProgram, node, sol::AbstractSolution)
+    getbellmanvalue(sp::AbstractStochasticProgram, node, sol::AbstractSolution)
 
-Return the value of the θ in the solution `sol` of node `node`.
+Return the value of the Bellman function in the solution `sol` of node `node`.
 This assumes that `node` is using `AvgCutGenerator`.
 """
-function getθvalue end
+function getbellmanvalue end
 
 abstract type AbstractSolutionPool end
 
