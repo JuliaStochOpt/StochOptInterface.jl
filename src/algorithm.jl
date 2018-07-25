@@ -86,7 +86,7 @@ function forward_pass!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
 
     i = 1
     for s in scenarios
-        path = simulate_scenario(sp, s, to, verbose)
+        path = simulate_scenario(sp, algo, s, to, verbose)
         paths[i] = path
         i += 1
     end
@@ -120,7 +120,7 @@ function simulate_scenario end
 
 """
     sample_scenarios(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
-                     to::TimerOutput, verbose)
+                     s::Vector{<:AbstractTransition}, to::TimerOutput, verbose)
 
 Return a vector of scenarios where each scenario is a vector of
 AbstractTransition from the stochastic program `sp`sampled according to
