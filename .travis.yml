@@ -1,0 +1,14 @@
+# Documentation: http://docs.travis-ci.com/user/languages/julia/
+language: julia
+os:
+  - linux
+julia:
+  - 0.6
+notifications:
+  email: false
+after_success:
+  # push coverage results to Codecov
+  - julia -e 'cd(Pkg.dir("StochOptInterface")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+  # build docs
+  - julia -e 'Pkg.add("Documenter")'
+  - julia -e 'cd(Pkg.dir("StochOptInterface")); include(joinpath("docs", "make.jl"))'

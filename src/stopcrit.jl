@@ -1,7 +1,7 @@
 abstract type AbstractStoppingCriterion end
 
 """
-    stop(s::AbstractStoppingCriterion, info)
+    stop(s::AbstractStoppingCriterion, info::Info)
 
 Determine whether the SDDP algorithm should stop using the information
 stored in `info`.
