@@ -112,11 +112,33 @@ algorithm `algo` with verbose level `verbose`.
 """
 function sample_scenarios end
 
+function sample_scenarios(sp::AbstractStochasticProgram, n::Int, depth_max = 1000;to::TimerOutput, verbose)
+    scenarios = []
+    for i = 1:n
+        push!(scenarios,sample_scenario(sp, depth_max))
+    end
+    return scenarios
+end
+
+function sample_scenario(sp::AbstractStochasticProgram, depth_max = 1000;to::TimerOutput, verbose)
+    node = get(sp,MasterNode())
+    s = []
+    it = 0
+    while !is_leaf(sp,node) && it < depth_max
+        tr = get(sp,RandomTransition,node)
+        node = tr.Target
+        push!(s, tr)
+        it += 1
+    end
+    #TODO update timer output
+    return s
+end
+
 """
     compute_bounds(algo::AbstractAlgorithm, paths::AbstractPaths, verbose)
 
-Return a tuple `(z_UB, σ)` where z_UB reprensets the upperbound computed by the
-algorithm `algo` by using paths `paths` generated during the forward pass and σ
+Return a tuple `(z_UB, σ)` where z_UB represents the upperbound computed by Monte Carlo with the
+algorithm `algo` by using paths `paths` and σ
 represents the standard deviation of this upper bound.
 """
 function compute_bounds end
