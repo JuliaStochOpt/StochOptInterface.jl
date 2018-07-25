@@ -4,7 +4,6 @@ mutable struct InvalidStoppingCriterion <: SOI.AbstractStoppingCriterion
 end
 
 @testset "Stopping Criterion" begin
-    K = 42
     z_LB = 1
     z_UB = 1
     σ = 1
@@ -12,7 +11,6 @@ end
     result = SOI.Result()
     result.upperbound = z_UB
     result.lowerbound = z_LB
-    result.npaths = K
     result.σ_UB = σ
 
     info = SOI.Info()

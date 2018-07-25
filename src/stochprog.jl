@@ -28,10 +28,12 @@ Add a new state to the stochastic program `sp` and returns it.
 function add_scenario_state! end
 
 """
-    addcut!(sp::AbstractStochasticProgram, state, pool::SOI.AbstractSolutionPool, stats, ztol)
+    addcut!(sp::AbstractStochasticProgram, state,
+            pool::SOI.AbstractSolutionPool, stats, ztol)
 
-Add cut `cut` to the state `state` using the solution pool `pool` and the threshold `ztol` to determine if the cut is redundant.
-The statistics are recorded in `stats`.
+Add cut `cut` to the state `state` using the solution pool `pool` and the
+threshold `ztol` to determine if the cut is redundant. The statistics are
+recorded in `stats`.
 """
 function addcut! end
 
