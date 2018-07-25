@@ -9,9 +9,9 @@ struct SolutionSummary
 end
 
 # Path represents a scenario along with a vector of AbstractSolution that corresponds to solutions for each node visited by the scenario
-struct Path{<:AbstractTransition, <: AbstractSolution}
-    scenario::Vector{<:AbstractTransition}
-    sol_scenario::Vector{<:AbstractSolution}
+struct Path{T<:AbstractTransition, SolT<:AbstractSolution}
+    scenario::Vector{T}
+    sol_scenario::Vector{SolT}
 end
 
 """
@@ -23,44 +23,18 @@ function optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, stopc
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
     paths = nothing
-    totalstats = Stats()
-    stats = Stats()
-    stats.niterations = 1
-    totalto = TimerOutput()
-    to = totalto
-
-    while (paths === nothing || getstatus(paths[1]) != :Infeasible) && !stop(stopcrit, to, stats, totalstats)
-        @timeit totalto "iteration $(totalstats.niterations+1)" paths, stats = iterate!(sp, algo, totalto, verbose)
-        to = totalto["iteration $(totalstats.niterations+1)"]
-        fto = TimerOutputs.flatten(totalto)
-        totalstats += stats
-        if verbose >= 2
-            println("Stats for this iteration:")
-            println(to)
-            println("Status: $(getstatus(mastersol))")
-            println("Solution value: $(getstatevalue(mastersol))")
-            println(stats)
-            println("Total stats:")
-            println(fto)
-            println(totalstats)
+    info = Info()
+    while (paths === nothing || getstatus(paths[1]) != :Infeasible) && !stop(stopcrit, info)
+        @timeit info.timer "iteration $(niterations(info)+1)" paths, result = iterate!(sp, algo, info.timer, verbose)
+        push!(info.results, result)
+        if verbose >= 3
+            print_iteration_summary(info)
         end
     end
-
-    fto = TimerOutputs.flatten(totalto)
-
-    if verbose >= 1
-        println(fto)
-        println("Status: $(getstatus(mastersol))")
-        println("Objective value: $(getobjectivevalue(mastersol))")
-        println(totalstats)
+    if verbose >= 2
+        print_termination_summary(info)
     end
-
-    attrs = Dict()
-    attrs[:stats] = totalstats
-    attrs[:niter] = totalstats.niterations
-    attrs[:nfcuts] = nfcuts(fto)
-    attrs[:nocuts] = nocuts(fto)
-    SolutionSummary(getstatus(mastersol), getobjectivevalue(mastersol), getstatevalue(mastersol), attrs)
+    info
 end
 
 """
@@ -72,13 +46,13 @@ Return the solution of the master state and the stats.
 function iterate!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to::TimerOutput, verbose)
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
-    paths, forward_stats = forward_pass(sp, algo, to, verbose)
+    paths, forward_result = forward_pass(sp, algo, to, verbose)
     backward_pass!(sp, algo, paths, to, verbose)
 
     process!(sp, algo, paths, to, verbose)
 
     # Uses forward_stats in the RHS so that its values are used for upperbound, lowerbound, σ_UB and npaths
-    paths, stats
+    paths, forward_result
 end
 
 """
@@ -91,13 +65,13 @@ function forward_pass(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to
     # Default implementation, define a specific method for algorithms for which
     # this default is not appropriate
     forward_stats = SDDPStats()
-    scenarios = sample_scenarios(sp,algo,to,verbose)
+    scenarios = sample_scenarios(sp, algo, to, verbose)
 
     paths = Vector{Path}(length(scenarios)) #Consider that sample_scenarios always return at least one scenario
 
     i = 1
     for s in scenarios
-        path = simulate_scenario(sp,s,to,verbose)
+        path = simulate_scenario(sp, s, to, verbose)
         paths[i] = path
         i += 1
     end

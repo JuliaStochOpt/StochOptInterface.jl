@@ -3,14 +3,12 @@ module StochOptInterface
 
 using DocStringExtensions
 
-include("timer.jl")
-
 # Stochastic Program
 include("stochprog.jl")
 include("attributes.jl")
 
-# Stats
-include("stats.jl")
+# Result informations and timing/allocation statistics
+include("info.jl")
 # Stopping Criterion
 include("stopcrit.jl")
 # Solution
