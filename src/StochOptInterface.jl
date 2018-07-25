@@ -1,4 +1,5 @@
-# TODO This module should be replaced by the package https://github.com/JuliaStochOpt/StochOptInterface.jl
+# TODO This module should be replaced by the package
+# https://github.com/JuliaStochOpt/StochOptInterface.jl
 module StochOptInterface
 
 using DocStringExtensions

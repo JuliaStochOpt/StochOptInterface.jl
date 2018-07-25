@@ -70,7 +70,8 @@ mutable struct CutLimit <: AbstractStoppingCriterion
 end
 
 function stop(s::CutLimit, info::Info)
-    niterations(info) > 0 && nfcuts(last_timer(info)) + nocuts(last_timer(info)) <= s.limit
+    niterations(info) > 0 && nfcuts(last_timer(info)) +
+                             nocuts(last_timer(info)) <= s.limit
 end
 
 
@@ -92,7 +93,8 @@ end
 """
 $(TYPEDEF)
 
-Stops if `z_UB - α * σ/√K - tol < z_LB < z_UB + α * σ/√K + tol` and `σ / √K > β * max(1, |z_LB|))`
+Stops if `z_UB - α * σ/√K - tol < z_LB < z_UB + α * σ/√K + tol` and
+    `σ / √K > β * max(1, |z_LB|))`
 """
 mutable struct Pereira <: AbstractStoppingCriterion
     α::Float64
@@ -112,7 +114,8 @@ function stop(s::Pereira, info::Info)
 
         @assert K >= 0
         σ1 = σ / √K
-        # On the test optimize_stock with Clp, z_LB = -2, z_UB = -1.999999999999 and σ1 = 0
+        # On the test optimize_stock with Clp, z_LB = -2, z_UB = -1.999999999999
+        # and σ1 = 0
         # this shows the necessicity for a tolerance
         σ2 = s.α * σ1 + s.tol
         z_UB - σ2 <= z_LB <= z_UB + σ2 && σ1 < s.β * max(1, abs(z_LB))
@@ -124,7 +127,8 @@ end
 """
 $(TYPEDEF)
 
-Stop if the relative gap between upper and lower bounds is less than epsilon (abs(ubp-lb)/abs(lb+ubp)) <= 2*epsilon
+Stop if the relative gap between upper and lower bounds is less than
+    epsilon (abs(ubp-lb)/abs(lb+ubp)) <= 2*epsilon
 """
 
 mutable struct Shapiro <: AbstractStoppingCriterion

@@ -1,5 +1,7 @@
 using TimerOutputs
-ncalls(to::TimerOutput, key::String) = haskey(to.inner_timers, key) ? TimerOutputs.ncalls(to[key]) : 0
+function ncalls(to::TimerOutput, key::String)
+    return haskey(to.inner_timers, key) ? TimerOutputs.ncalls(to[key]) : 0
+end
 const FCUTS_KEY = "fcuts"
 nfcuts(to) = ncalls(to, FCUTS_KEY)
 const OCUTS_KEY = "ocuts"
@@ -7,7 +9,8 @@ nocuts(to) = ncalls(to, OCUTS_KEY)
 iteration_key(it) = "iteration $it"
 
 mutable struct Result
-    # n forwards passes of last computation of upper-bound in the form of path vector:
+    # n forwards passes of last computation of upper-bound in the
+    # form of path vector:
     paths::Vector{Path}
     # current lower bound
     lowerbound::Float64

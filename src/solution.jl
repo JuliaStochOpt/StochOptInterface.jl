@@ -4,14 +4,16 @@ abstract type AbstractSolution end
 """
     feasibility_cut(sol::AbstractSolution)
 
-Returns the tuple `(a, α)` representing the feasibility cut ``⟨a, x⟩ ≧ α`` certified by this solution.
+Returns the tuple `(a, α)` representing the feasibility cut ``⟨a, x⟩ ≧ α``
+certified by this solution.
 """
 function feasibility_cut end
 
 """
     optimality_cut(sol::AbstractSolution)
 
-Returns the tuple `(a, α)` representing the optimality cut ``⟨a, x⟩ + θ ≧ α`` certified by this solution.
+Returns the tuple `(a, α)` representing the optimality cut ``⟨a, x⟩ + θ ≧ α``
+certified by this solution.
 """
 function optimality_cut end
 
@@ -25,14 +27,16 @@ function getstatus end
 """
     getobjectivevalue(sol::AbstractSolution)
 
-Returns the objective value of the solution `sol` *including* the part of the objective depending on `θ`.
+Returns the objective value of the solution `sol` *including* the part of the
+objective depending on `θ`.
 """
 function getobjectivevalue end
 
 """
     getstateobjectivevalue(sol::AbstractSolution)
 
-Returns the objective value of the solution `sol` *excluding* the part of the objective depending on `θ`.
+Returns the objective value of the solution `sol` *excluding* the part of the
+objective depending on `θ`.
 """
 function getstateobjectivevalue end
 
@@ -45,10 +49,12 @@ Returns the value of the state of solution `sol`.
 function getstatevalue end
 
 """
-    getθvalue(sp::AbstractStochasticProgram, tr::AbstractTransition, sol::AbstractSolution)
+    getθvalue(sp::AbstractStochasticProgram, tr::AbstractTransition,
+              sol::AbstractSolution)
 
-Returns the value of the θ in the solution `sol` of node `SOI.get(sp, SOI.Source(), tr)` for its transition `tr`.
-This assumes that `node` is using `MultiCutGenerator`.
+Returns the value of the θ in the solution `sol` of node
+`SOI.get(sp, SOI.Source(), tr)` for its transition `tr`.This assumes that `node`
+is using `MultiCutGenerator`.
 
     getθvalue(sp::AbstractStochasticProgram, node, sol::AbstractSolution)
 
@@ -76,7 +82,8 @@ function allbounded end
 """
     hassolution(pool::AbstractSolutionPool, tr::AbstractTransition)
 
-Return a `Bool` indicating whether the solution pool `pool` has a solution for transition `tr`.
+Return a `Bool` indicating whether the solution pool `pool` has a solution for
+transition `tr`.
 """
 function hassolution end
 
