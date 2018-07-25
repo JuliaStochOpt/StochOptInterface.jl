@@ -8,6 +8,7 @@
 ################################################################################
 module StochOptInterface
 
+using TimerOutputs
 # Stochastic Program
 include("stochprog.jl")
 include("attributes.jl")
