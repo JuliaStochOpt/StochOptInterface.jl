@@ -51,8 +51,8 @@ function iterate!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm, to::Ti
 
     process!(sp, algo, paths, to, verbose)
 
-    # Uses forward_stats in the RHS so that its values are used for upperbound, lowerbound, σ_UB and npaths
-    paths, forward_result
+    # Uses result so that its are used for upperbound, σ_UB and npaths
+    result
 end
 
 """
