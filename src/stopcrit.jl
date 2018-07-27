@@ -13,7 +13,7 @@ end
 """
 $(TYPEDEF)
 
-Stops if `lhs` *or* `rhs` want to stop.
+Stop if `lhs` *or* `rhs` want to stop.
 """
 mutable struct OrStoppingCriterion <: AbstractStoppingCriterion
     lhs::AbstractStoppingCriterion
@@ -31,7 +31,7 @@ end
 """
 $(TYPEDEF)
 
-Stops if `lhs` *and* `rhs` want to stop.
+Stop if `lhs` *and* `rhs` want to stop.
 """
 mutable struct AndStoppingCriterion <: AbstractStoppingCriterion
     lhs::AbstractStoppingCriterion
@@ -49,7 +49,7 @@ end
 """
 $(TYPEDEF)
 
-Stops if `iter` ≧ `limit`.
+Stop if `iter` ≧ `limit`.
 """
 mutable struct IterLimit <: AbstractStoppingCriterion
     limit::Int
@@ -62,7 +62,7 @@ end
 """
 $(TYPEDEF)
 
-Stops if there was less than or equal to `limit` cuts added in the iteration.
+Stop if there was less than or equal to `limit` cuts added in the iteration.
 For instance, `CutLimit(0)` stops when there are no cuts added.
 """
 mutable struct CutLimit <: AbstractStoppingCriterion
@@ -78,7 +78,7 @@ end
 """
 $(TYPEDEF)
 
-Stops if total time of execution is greater than the time limit specified.
+Stop if total time of execution is greater than the time limit specified.
 For instance, `TimeLimit(100)` stops after 100s.
 """
 mutable struct TimeLimit <: AbstractStoppingCriterion
@@ -93,7 +93,7 @@ end
 """
 $(TYPEDEF)
 
-Stops if `z_UB - α * σ/√K - tol < z_LB < z_UB + α * σ/√K + tol` and
+Stop if `z_UB - α * σ/√K - tol < z_LB < z_UB + α * σ/√K + tol` and
     `σ / √K > β * max(1, |z_LB|))`
 """
 mutable struct Pereira <: AbstractStoppingCriterion

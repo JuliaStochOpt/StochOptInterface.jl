@@ -4,7 +4,7 @@ abstract type AbstractSolution end
 """
     feasibility_cut(sol::AbstractSolution)
 
-Returns the tuple `(a, α)` representing the feasibility cut ``⟨a, x⟩ ≧ α``
+Return the tuple `(a, α)` representing the feasibility cut ``⟨a, x⟩ ≧ α``
 certified by this solution.
 """
 function feasibility_cut end
@@ -12,7 +12,7 @@ function feasibility_cut end
 """
     optimality_cut(sol::AbstractSolution)
 
-Returns the tuple `(a, α)` representing the optimality cut ``⟨a, x⟩ + θ ≧ α``
+Return the tuple `(a, α)` representing the optimality cut ``⟨a, x⟩ + θ ≧ α``
 certified by this solution.
 """
 function optimality_cut end
@@ -20,23 +20,23 @@ function optimality_cut end
 """
     getstatus(sol::AbstractSolution)
 
-Returns the status of the solution `sol`.
+Return the status of the solution `sol`.
 """
 function getstatus end
 
 """
     getobjectivevalue(sol::AbstractSolution)
 
-Returns the objective value of the solution `sol` *including* the part of the
-objective depending on `θ`.
+Return the objective value of the solution `sol` *including* the part of the
+objective depending on Bellman value function `θ`.
 """
 function getobjectivevalue end
 
 """
     getnodeobjectivevalue(sol::AbstractSolution)
 
-Returns the objective value of the solution `sol` *excluding* the part of the
-objective depending on `θ`.
+Return the objective value of the solution `sol` *excluding* the part of the
+objective depending on Bellman value function `θ`.
 """
 function getnodeobjectivevalue end
 
@@ -44,38 +44,40 @@ function getnodeobjectivevalue end
 """
     getnodevalue(sol::AbstractSolution)
 
-Returns the value of the node of solution `sol`.
+Return the value of the state of solution `sol`.
 """
 function getnodevalue end
 
 """
-    getθvalue(sp::AbstractStochasticProgram, tr::AbstractTransition,
+    getbellmanvalue(sp::AbstractStochasticProgram, tr::AbstractTransition,
               sol::AbstractSolution)
 
-Returns the value of the θ in the solution `sol` of node
-`SOI.get(sp, SOI.Source(), tr)` for its transition `tr`.This assumes that `node`
-is using `MultiCutGenerator`.
+Return the value of the Bellman function in the solution `sol` of node
+`SOI.get(sp, SOI.Source(), tr)` for its transition `tr`.
+This assumes that `node` is using `MultiCutGenerator`.
 
-    getθvalue(sp::AbstractStochasticProgram, node, sol::AbstractSolution)
+    getbellmanvalue(sp::AbstractStochasticProgram, node, sol::AbstractSolution)
 
-Returns the value of the θ in the solution `sol` of node `node`.
+Return the value of the Bellman function in the solution `sol` of node `node`.
 This assumes that `node` is using `AvgCutGenerator`.
 """
-function getθvalue end
+function getbellmanvalue end
 
 abstract type AbstractSolutionPool end
 
 """
     allfeasible(pool::AbstractSolutionPool)
 
-Return a `Bool` indicating whether all transitions current solved were feasible.
+Return a `Bool` indicating whether all transitions current solved were
+feasible.
 """
 function allfeasible end
 
 """
     allbounded(pool::AbstractSolutionPool)
 
-Return a `Bool` indicating whether all transitions current solved were bounded.
+Return a `Bool` indicating whether all transitions current solved were
+bounded.
 """
 function allbounded end
 

@@ -5,20 +5,25 @@ using LightGraphs
 """
     AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int}
 
-Stochastic program instance
+Stochastic program instance.
 """
 abstract type AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int} end
 
 """
     stochasticprogram(args...)
 
-Creates a stochastic program from the arguments
+Create a stochastic program from the arguments.
 """
 function stochasticprogram end
 
 ## Node
 
-# The type of nodes is `Int` for compatibility with LightGraphs' nodes
+"""
+    AbstractNode
+
+Node instance.
+"""
+abstract type AbstractNode end
 
 """
     add_scenario_node!(sp::AbstractStochasticProgram, ...)
@@ -49,7 +54,7 @@ function applycuts! end
 """
     AbstractTransition <: LightGraphs.AbstractEdge{Int}
 
-Transition between two nodes of the stochastic program
+Transition between two nodes of the stochastic program.
 """
 abstract type AbstractTransition <: LightGraphs.AbstractEdge{Int} end
 
