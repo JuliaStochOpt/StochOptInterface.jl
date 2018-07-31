@@ -10,6 +10,7 @@ abstract type AbstractPaths end
 struct Paths <: AbstractPaths
     paths::Vector{Path}
 end
+npaths(paths::Paths) = length(paths.paths)
 
 ################################################################################
 # Utilities to manipulate TimerOutput object
@@ -49,7 +50,7 @@ mutable struct Result
 end
 
 Result() = Result(Paths(Path[]), :Unbounded, 0.0, Inf, 0.0)
-npaths(result::Result) = length(result.paths.paths)
+npaths(result::Result) = npaths(result.paths)
 
 function Base.show(io::IO, result::Result)
     println(io, "Exact Lower Bound: $(result.lowerbound)")
