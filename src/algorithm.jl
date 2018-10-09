@@ -66,8 +66,8 @@ function forward_pass!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
     # this default is not appropriate
     scenarios = sample_scenarios(sp, algo, to, verbose)
 
-    paths = Vector{Path}(length(scenarios)) #Consider that sample_scenarios
-                                            #always return at least one scenario
+    paths = Vector{Path}(undef, length(scenarios)) #Consider that sample_scenarios
+                                                   #always return at least one scenario
 
     for (i, s) in enumerate(scenarios)
         path = simulate_scenario(sp, algo, s, to, verbose)
