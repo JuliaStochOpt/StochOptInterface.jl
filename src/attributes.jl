@@ -24,6 +24,12 @@ attributes (properties) of transitions in the stochastic program.
 """
 abstract type AbstractTransitionAttribute end
 
+if VERSION >= v"0.7-"
+    Base.broadcastable(attr::Union{AbstractStochasticProgramAttribute,
+                                   AbstractNodeAttribute,
+                                   AbstractTransitionAttribute}) = Ref(attr)
+end
+
 """
     get(sp::AbstractStochasticProgram, attr::AbstractStochasticProgramAttribute)
 

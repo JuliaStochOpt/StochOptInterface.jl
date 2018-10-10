@@ -8,6 +8,9 @@ using LightGraphs
 Stochastic program instance.
 """
 abstract type AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int} end
+if VERSION >= v"0.7-"
+    Base.broadcastable(sp::AbstractStochasticProgram) = Ref(sp)
+end
 
 """
     stochasticprogram(args...)
