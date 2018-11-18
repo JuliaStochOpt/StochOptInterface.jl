@@ -224,3 +224,35 @@ struct SourceSolution <: AbstractTransitionAttribute end
 The current bound to the objective of the node.
 """
 struct TransitionObjectiveValueBound <: AbstractNodeAttribute end
+
+"""
+    RandomTransition <: AbstractNodeAttribute
+
+return a randomly selected transition from node `node`
+### Examples
+
+```julia
+get(model, RandomTransition(), node)
+```
+"""
+struct RandomTransition <: AbstractNodeAttribute end
+function get(sp::AbstractStochasticProgram, tr::RandomTransition, node::Int)
+    r = rand()
+    cdf = 0.
+    for tr in get(sp,OutTransitions(),node)
+        if cdf >= r
+             cdf += get(sp, Probability(), tr)
+        else
+            return tr
+        end
+    end
+    error("sum of probability $cdf < 1")
+end
+
+struct IsLeaf <: AbstractNodeAttribute end
+function get(sp::AbstractStochasticProgram, node::Int)
+    return isempty(get(sp, OutTransitions(), node))
+end
+function is_empty(sp::AbstractStochasticProgram, node::Int)
+    return get(sp, IsLeaf(), node)
+end
