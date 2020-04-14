@@ -27,7 +27,7 @@ function optimize!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
     if verbose >= 2
         print_termination_summary(info)
     end
-    info
+    return info
 end
 
 """
@@ -49,7 +49,7 @@ function iterate!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
     process!(sp, algo, to, result, verbose)
 
     # Uses result so that its are used for upperbound, σ_UB and npaths
-    result
+    return result
 end
 
 """
@@ -80,6 +80,7 @@ function forward_pass!(sp::AbstractStochasticProgram, algo::AbstractAlgorithm,
     result.paths = paths_struct
     result.upperbound = z_UB
     result.σ_UB = σ
+    return
 end
 
 """
