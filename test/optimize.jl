@@ -14,14 +14,14 @@ function SOI.backward_pass!(sp::MockStochasticProgram, algo::MockAlgorithm,
 end
 function SOI.simulate_scenario(sp::MockStochasticProgram, algo::MockAlgorithm, scenario::Vector{<:SOI.AbstractTransition},
                                to::TimerOutput, verbose)
-    SOI.Path(scenario, [MockSolution() for i in 0:length(scenario)])
+    return SOI.Path(scenario, [MockSolution() for i in 0:length(scenario)])
 end
 function SOI.sample_scenarios(sp::MockStochasticProgram, algo::MockAlgorithm, to::TimerOutput,
                               verbose)
-    [fill(MockTransition(), 2) for i in 1:algo.npaths]
+    return [fill(MockTransition(), 2) for i in 1:algo.npaths]
 end
 function SOI.compute_bounds(algo::MockAlgorithm, paths::SOI.Paths, verbose)
-    0.0, 0.0
+    return (0.0, 0.0)
 end
 
 @testset "Mock tests" begin
