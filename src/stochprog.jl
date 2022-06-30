@@ -1,13 +1,13 @@
-using LightGraphs
+using Graphs
 
 ## Stochastic Program
 
 """
-    AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int}
+    AbstractStochasticProgram <: Graphs.AbstractGraph{Int}
 
 Stochastic program instance.
 """
-abstract type AbstractStochasticProgram <: LightGraphs.AbstractGraph{Int} end
+abstract type AbstractStochasticProgram <: Graphs.AbstractGraph{Int} end
 if VERSION >= v"0.7-"
     Base.broadcastable(sp::AbstractStochasticProgram) = Ref(sp)
 end
@@ -55,11 +55,11 @@ function applycuts! end
 ## Transition
 
 """
-    AbstractTransition <: LightGraphs.AbstractEdge{Int}
+    AbstractTransition <: Graphs.AbstractEdge{Int}
 
 Transition between two nodes of the stochastic program.
 """
-abstract type AbstractTransition <: LightGraphs.AbstractEdge{Int} end
+abstract type AbstractTransition <: Graphs.AbstractEdge{Int} end
 
 """
     add_scenario_transition!(sp::AbstractStochasticProgram, ...)

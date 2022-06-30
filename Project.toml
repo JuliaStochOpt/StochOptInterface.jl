@@ -9,7 +9,7 @@ Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
 TimerOutputs = "a759f4b9-e2f1-59dc-863e-4aeb61b1ea8f"
 
 [compat]
-DocStringExtensions = "0.9"
+DocStringExtensions = "0.8"
 Graphs = "1"
 TimerOutputs = "0.5"
 julia = "1.6"

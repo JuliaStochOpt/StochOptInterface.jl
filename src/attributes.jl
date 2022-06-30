@@ -135,7 +135,7 @@ struct OutTransitions <: AbstractNodeAttribute end
 
 # May be different from the number of out-neighbors if there are multiple
 # transitions with the same target
-function LightGraphs.outdegree(sp::AbstractStochasticProgram, node::Int)
+function Graphs.outdegree(sp::AbstractStochasticProgram, node::Int)
     return length(get(sp, OutTransitions(), node))
 end
 
