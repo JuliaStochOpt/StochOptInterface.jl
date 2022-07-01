@@ -1,7 +1,7 @@
 name = "StochOptInterface"
 uuid = "ddbffdd9-5b1a-5f20-b6eb-597a58a751db"
 authors = ["JuliaStochOpt"]
-version = "0.2.0"
+version = "0.1.0"
 
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
