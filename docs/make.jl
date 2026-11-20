@@ -11,7 +11,8 @@ makedocs(
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
         "Index" => "index.md",
-        "Stopping Criterion" => "stopcrit.md"
+        "Stopping Criterion" => "stopcrit.md",
+        "API Reference" => "api.md",
     ],
     # The following ensures that we only include the docstrings from
     # this module for functions define in Base that we overwrite.
