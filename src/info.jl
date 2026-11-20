@@ -15,12 +15,12 @@ npaths(paths::Paths) = length(paths.paths)
 ################################################################################
 # Utilities to manipulate TimerOutput object
 """
-    ncalls(to::TimerOutput, key::String)
+    ncalls(to, key::String)
 
 Number of calls to evaluate objects specified by `key`.
 """
-function ncalls(to::TimerOutput, key::String)
-    return haskey(to.inner_timers, key) ? TimerOutputs.ncalls(to[key]) : 0
+function ncalls(to, key::String)
+    return haskey(to, key) ? TimerOutputs.ncalls(to[key]) : 0
 end
 
 const FCUTS_KEY = "fcuts"
@@ -81,7 +81,7 @@ timer(info::Info, it::Int) = info.timer[iteration_key(it)]
 # get last iteration's time
 last_timer(info::Info) = timer(info, niterations(info))
 # Time is in ns
-total_time_ns(info::Info) = (time_ns() - info.timer.start_data.time)
+total_time_ns(info::Info) = (time_ns() - info.timer.start_time)
 total_time(info::Info) = total_time_ns(info) / 1e9
 
 function Base.show(io::IO, info::Info)
