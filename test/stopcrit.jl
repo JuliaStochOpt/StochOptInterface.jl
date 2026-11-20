@@ -1,4 +1,8 @@
+using StochOptInterface
+using Test
 using TimerOutputs
+
+const SOI = StochOptInterface
 
 mutable struct InvalidStoppingCriterion <: SOI.AbstractStoppingCriterion
 end
@@ -21,6 +25,7 @@ end
         end
     end
 
+    @test SOI.stop(SOI.TimeLimit(0), info)
     @test_throws ErrorException SOI.stop(InvalidStoppingCriterion(), info)
     @test SOI.stop(SOI.AndStoppingCriterion(SOI.IterLimit(8), SOI.CutLimit(8)), info)
 
