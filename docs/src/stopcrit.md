@@ -10,5 +10,6 @@ OrStoppingCriterion
 AndStoppingCriterion
 IterLimit
 CutLimit
+TimeLimit
 Pereira
 ```

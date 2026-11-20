@@ -4,6 +4,6 @@ Welcome to [StochOptInterface](https://github.com/JuliaStochOpt/StochOptInterfac
 
 ## Contents
 ```@contents
-Pages = ["stopcrit.md"]
+Pages = ["stopcrit.md", "api.md"]
 Depth = 2
 ```
