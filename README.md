@@ -17,9 +17,9 @@ A generic package to write stochastic programs easily
 [docs-stable-url]: https://juliastochopt.github.io/StochOptInterface.jl/stable
 [docs-latest-url]: https://juliastochopt.github.io/StochOptInterface.jl/latest
 
-[build-img]: https://travis-ci.org/JuliaStochOpt/StochOptInterface.jl.svg?branch=master
+[build-img]: https://travis-ci.org/JuliaStochOpt/StochOptInterface.jl.svg?branch=main
 [build-url]: https://travis-ci.org/JuliaStochOpt/StochOptInterface.jl
-[codecov-img]: https://codecov.io/gh/JuliaStochOpt/StochOptInterface.jl/branch/master/graph/badge.svg
+[codecov-img]: https://codecov.io/gh/JuliaStochOpt/StochOptInterface.jl/branch/main/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/JuliaStochOpt/StochOptInterface.jl
 
 [gitter-url]: https://gitter.im/JuliaOpt/StochasticDualDynamicProgramming.jl?utm_source=share-link&utm_medium=link&utm_campaign=share-link
